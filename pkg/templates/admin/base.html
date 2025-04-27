@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Admin Dashboard</title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+
+
+  <!-- Favicons -->
+  <link href="/static/images/favicon.png" rel="icon">
+ 
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+  <link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/static/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="/static/vendor/aos/aos.css" rel="stylesheet">
+  <link href="/static/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link href="/static/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="{{ url_for('static', filename='font_awesome/css/all.css') }}" rel="stylesheet">
+  
+  <link href="/static/css/main.css" rel="stylesheet">
+
+  <style>
+    
+
+</style>
+  
+
+    
+ 
+</head>
+<body class="container-fluid">
+
+
+
+
+<div class="row align-items-center px-3" style="background-color: black; height: 100px; display: flex; justify-content: space-between;">
+    
+    <div class="col-auto">
+        <a href="/"><img src="/static/images/logo.jpg" alt="Logo" style="height: 80px;" class="rounded-circle"></a>
+    </div>
+
+
+    
+    <div class="col-auto d-flex align-items-center gap-4">
+      <a href="{{ url_for('manage_messages') }}" class="text-white position-relative">
+          <i class="fas fa-envelope fa-2x"></i>
+          {% if unread_messages > 0 %}
+              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                  {{ unread_messages }}
+              </span>
+          {% endif %}
+      </a>
+  
+      <span class="me-3 text-white fs-5">Hi {{ session.get('admin_name', 'Admin') }}</span>
+  
+      <!-- Admin Profile Image -->
+      <div class="dropdown">
+        <a class="dropdown-toggle d-flex align-items-center" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <img 
+                src="{{ url_for('static', filename='images/' + (session.get('admin_profile_pic') or 'sunday2.png')) }}" 
+                alt="Admin Profile" 
+                class="rounded-circle border" 
+                style="height: 60px; width: 60px; object-fit: cover;">
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="profileDropdown">
+            
+          {% if session.get('admin_id') is none %}
+    <li><a class="dropdown-item" href="{{ url_for('admin_login') }}"><i class="fas fa-sign-in-alt me-2"></i> Login</a></li>
+{% else %}
+    <li><a class="dropdown-item" href="{{ url_for('admin_logout') }}"><i class="fas fa-sign-out-alt me-2"></i> Logout</a></li>
+{% endif %}
+
+
+        </ul>
+    </div> 
+  </div>
+  
+
+   
+</div>
+
+
+<div class="pt-3 row g-0" style="background-color: #f7f7f7; min-height: 100vh;">
+  
+    <!-- Sidebar toggle for mobile -->
+    <div class="d-block d-md-none px-3">
+      <button class="btn btn-dark my-2" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu">
+        <i class="fas fa-bars"></i> Menu
+      </button>
+    </div>
+  
+    <!-- Sidebar -->
+    {% if current_admin %} 
+    <div class="col-md-3 col-lg-2 collapse d-md-block sidebar" id="sidebarMenu">
+      <h4 class="text-white text-center">Menu</h4>
+      <a href="{{url_for('admin_dashboard')}}" class="{% if request.endpoint == 'admin_dashboard' %}active-link{% endif %}"> <i class="fas fa-tachometer-alt"></i> Dashboard</a>
+      <a href="{{url_for('add_product')}}" class="{% if request.endpoint == 'add_product' %}active-link{% endif %}"><i class="fas fa-edit"></i> Add Product</a>
+      <a href="{{ url_for('manage_products') }}" class="{% if request.endpoint == 'manage_products' %}active-link{% endif %}"><i class="fas fa-building"></i> Manage Product</a>
+      <a href="{{url_for('manage_messages')}}" class="{% if request.endpoint == 'manage_messages' %}active-link{% endif %}"><i class="fas fa-envelope"></i> Contact Messages
+      </a>
+      <a href="{{url_for('manage_galleries')}}" class="{% if request.endpoint == 'manage_galleries' %}active-link{% endif %}"><i class="fas fa-image"></i> Manage Galleries
+      </a>
+      
+      <a href="{{ url_for('manage_distributors') }}" class="{% if request.endpoint == 'manage_distributors' %}active-link{% endif %}"><i class="fas fa-users"></i> Manage Distributors
+      </a>
+      
+    
+      <a href="{{url_for('admin_settings')}}" class="{% if request.endpoint == 'admin_settings' %}active-link{% endif %}">
+        <i class="fas fa-cog"></i> Settings
+    </a>
+      <a href="{{url_for('admin_logout')}}">
+          <i class="fas fa-sign-out-alt"></i> Logout
+      </a>
+    </div>
+    {% endif %}
+  
+    <!-- Main Content -->
+    <div class="col-md-9 col-lg-10 content p-4">
+      {% block content %}
+      {% endblock content %}
+      {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% set category, message = messages[0] %}
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        Swal.fire({
+          icon: '{{ 'success' if category == 'success' else 'info' }}',
+          title: {{ message|tojson }},
+          showConfirmButton: false,
+          timer: 3000
+        });
+      });
+    </script>
+  {% endif %}
+{% endwith %}
+    </div>
+  </div>
+  
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/static/vendor/aos/aos.js"></script>
+<script src="/static/vendor/purecounter/purecounter_vanilla.js"></script>
+<script src="/static/vendor/swiper/swiper-bundle.min.js"></script>
+<script src="/static/vendor/glightbox/js/glightbox.min.js"></script>
+<script src="/static/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+<script src="/static/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+<script src="/static/js/main.js"></script>
+
+
+</body>
+</html>

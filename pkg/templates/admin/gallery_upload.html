@@ -1,0 +1,53 @@
+{% extends "admin/base.html" %}
+{% block content %}
+
+<section class="section">
+  <div class="container mt-">
+    <h3 class="text-center mb-4">Upload to Gallery</h3>
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+
+        <form method="POST" enctype="multipart/form-data" class="p-4 shadow rounded bg-white">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+          <div class="mb-3">
+            <label class="form-label fw-bold">Title</label>
+            <input type="text" name="title" class="form-control" required>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label fw-bold">Description</label>
+            <textarea name="description" rows="3" class="form-control"></textarea>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label fw-bold">Media Type</label>
+            <select name="media_type" class="form-select" required>
+              <option value="image">Image</option>
+              <option value="video">Video</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label fw-bold">Upload File</label>
+            <input type="file" name="media_file" class="form-control" accept="image/*,video/*" required>
+            <small class="text-muted">Images: JPG/PNG. Videos: MP4 (max 20MB recommended)</small>
+          </div>
+
+          <div class="d-flex justify-content-between mt-4">
+            <button type="submit" class="btn btn-success w-50 me-2">
+              <i class="fas fa-upload me-1"></i> Upload
+            </button>
+            <a href="{{ url_for('admin_dashboard') }}" class="btn btn-outline-secondary w-50">
+              Cancel
+            </a>
+          </div>
+
+        </form>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock content %}

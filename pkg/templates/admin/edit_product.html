@@ -1,0 +1,37 @@
+{% extends "admin/base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Edit Product</h2>
+    <form id="product-form" action="{{ url_for('edit_product', product_id=product.product_id) }}" method="POST" class="email-form p-4 shadow rounded bg-white"  data-aos-delay="500" enctype="multipart/form-data">
+
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control" id="name" name="name" value="{{ product.product_name }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea class="form-control" id="description" name="description" rows="4" required>{{ product.product_description }}</textarea>
+        </div>
+
+        
+
+        <div class="mb-3">
+            <label for="category" class="form-label">Category</label>
+            <select name="category" id="category" class="form-select" required>
+                {% for cat in categories %}
+                    <option value="{{ cat.id }}" {% if cat.id == product.category_id %}selected{% endif %}>
+                        {{ cat.name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+        
+
+        <button type="submit" class="btn btn-warning">Update Product</button>
+        <a href="{{ url_for('manage_products') }}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}

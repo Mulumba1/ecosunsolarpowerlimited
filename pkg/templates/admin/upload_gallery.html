@@ -1,0 +1,59 @@
+{% extends "admin/base.html" %}
+{% block content %}
+
+<section class="section">
+  <div class="container">
+    <h3 class="text-center mb-4">Upload Gallery Media</h3>
+    <div class="row gy-4 justify-content-center">
+      <div class="col-lg-8">
+
+        <form action="{{ url_for('upload_gallery') }}" method="POST" enctype="multipart/form-data" class="p-4 shadow rounded bg-white">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+          <!-- Title -->
+          <div class="mb-3">
+            <label class="form-label fw-bold">Media Title</label>
+            <input type="text" name="title" class="form-control" placeholder="Enter media title" required>
+          </div>
+
+          <!-- Description -->
+          <div class="mb-3">
+            <label class="form-label fw-bold">Description <span class="text-muted">(optional)</span></label>
+            <textarea name="description" class="form-control" rows="3" placeholder="Describe the media (if needed)"></textarea>
+          </div>
+
+          <!-- Media Type -->
+          <div class="mb-3">
+            <label class="form-label fw-bold">Media Type</label>
+            <select name="media_type" class="form-select" required>
+              <option value="">-- Select --</option>
+              <option value="image">Image</option>
+              <option value="video">Video</option>
+            </select>
+          </div>
+
+          <!-- File Upload -->
+          <div class="mb-3">
+            <label class="form-label fw-bold">Upload File</label>
+            <input type="file" name="media_files" class="form-control" multiple accept="image/*, video/*" required>
+            <small class="text-muted">Supported formats: .jpg, .png, .mp4, etc.</small>
+          </div>
+
+          <!-- Buttons -->
+          <div class="d-flex justify-content-between mt-4">
+            <button type="submit" class="btn btn-success w-50 me-2">
+              <i class="fas fa-upload me-1"></i> Upload Media
+            </button>
+            <a href="{{ url_for('admin_dashboard') }}" class="btn btn-outline-danger w-50">
+              Cancel
+            </a>
+          </div>
+
+        </form>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock content %}

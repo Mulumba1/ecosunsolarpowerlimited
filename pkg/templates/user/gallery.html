@@ -1,0 +1,85 @@
+{% extends "user/base.html" %}
+{% block content %}
+
+<style>
+    .product-img.fixed-img {
+        height: 300px;
+        object-fit: cover;
+    }
+
+    .card {
+        height: 100%;
+    }
+
+    .card-body {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .product-card {
+        display: flex;
+    }
+</style>
+
+<section class="bg-light py-5 text-center shadow-sm rounded mb-4" style="background: linear-gradient(to right, #fdfffe, #bcc3ca);">
+    <div class="container">
+        <h1 class="display-5 fw-bold text-success mb-3">
+            <i class="fas fa-images text-warning me-2"></i> Our Solar Journey Gallery
+        </h1>
+        <p class="text-success fs-5">Explore photos and videos from our eco-friendly solar projects.</p>
+    </div>
+</section>
+
+<div class="container mt-4">
+
+    <!-- Search -->
+    <div class="d-flex justify-content-between mb-4">
+        <input type="text" id="searchInput" class="form-control w-50" placeholder="Search by title..." onkeyup="searchGallery()">
+    </div>
+
+    <!-- Gallery Grid -->
+    <div class="row" id="galleryGrid">
+        
+
+
+                    {% for gallery in gallery_items %}
+
+                        <div class="col-md-4 mb-4 product-card d-flex align-items-stretch">
+                            <div class="card shadow border-0 w-100">
+                                {% if gallery.media_type == 'image' %}
+                                <a href="{{ url_for('static', filename='uploads/' + gallery.filename) }}" data-gallery="gallery-zoom" class="glightbox">
+                                    <img src="{{ url_for('static', filename='uploads/' + gallery.filename) }}" class="card-img-top product-img fixed-img" alt="{{ gallery.title }}">
+                                </a>
+                                
+                {% elif gallery.media_type == 'video' %}
+                    <video class="w-100 fixed-img" controls>
+                        <source src="{{ url_for('static', filename='uploads/' + gallery.filename) }}" type="video/{{ gallery.filename.rsplit('.', 1)[1].lower() }}">
+                        Your browser does not support the video tag.
+                    </video>
+                {% endif %}
+
+
+                <div class="card-body">
+                    <h5 class="card-title">{{ gallery.title or 'Untitled' }}</h5>
+                    <p class="card-text">{{ gallery.description[:100] }}...</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+
+<script>
+    function searchGallery() {
+        const input = document.getElementById("searchInput").value.toLowerCase();
+        const items = document.querySelectorAll(".product-card");
+
+        items.forEach(item => {
+            const title = item.querySelector(".card-title").innerText.toLowerCase();
+            item.style.display = title.includes(input) ? "block" : "none";
+        });
+    }
+</script>
+
+{% endblock %}

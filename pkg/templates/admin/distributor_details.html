@@ -1,0 +1,69 @@
+{% extends "admin/base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="mb-4">
+        <a href="{{ url_for('manage_distributors') }}" class="btn btn-dark shadow-sm back-btn">
+            <i class="fas fa-arrow-left"></i> Back
+        </a>
+    </div>
+
+    <div class="row">
+        <!-- Distributor Picture -->
+        <div class="col-md-5">
+            <div class="shadow rounded p-3 text-center">
+                {% if distributor.passport_photo %}
+                    <img src="{{ url_for('static', filename='uploads/' + distributor.passport_photo) }}" 
+                        class="img-fluid rounded"
+                        alt="{{ distributor.full_name }}">
+                {% else %}
+                    <img src="{{ url_for('static', filename='images/default-avatar.png') }}" 
+                        class="img-fluid rounded" 
+                        alt="No Photo">
+                {% endif %}
+
+            </div>
+        </div>
+
+        <!-- Distributor Details -->
+        <div class="col-md-7">
+            <table class="table table-bordered shadow-sm">
+                <tbody>
+                    <tr>
+                        <th>Distributor Name:</th>
+                        <td>{{ distributor.full_name }}</td>
+                    </tr>
+                    <tr>
+                        <th>Distributor ID:</th>
+                        <td>{{ distributor.distributor_id }}</td>
+                    </tr>
+                    <tr>
+                        <th>Email:</th>
+                        <td>{{ distributor.email }}</td>
+                    </tr>
+                    <tr>
+                        <th>Phone Number:</th>
+                        <td>{{ distributor.phone }}</td>
+                    </tr>
+                    <tr>
+                        <th>Company Name:</th>
+                        <td>{{ distributor.company_name }}</td>
+                    </tr>
+                    <tr>
+                        <th>Company Address:</th>
+                        <td>{{ distributor.address }}</td>
+                    </tr>
+                    <tr>
+                        <th>Company Reg No:</th>
+                        <td>{{ distributor.registration_number }}</td>
+                    </tr>
+                    <tr>
+                        <th>Date Registered:</th>
+                        <td>{{ distributor.date_registered.strftime('%Y-%m-%d') }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,384 @@
+{% extends "user/base.html" %}
+{% block content %}
+<style>
+  .portfolio-content img {
+    height: 400px; /* adjust as needed */
+    width: 100%;
+    object-fit: cover;
+    border-radius: 8px; /* optional: for rounded corners */
+  }
+
+  .portfolio-content {
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+  }
+
+  .portfolio-content:hover {
+    transform: translateY(-5px);
+  }
+
+  .portfolio-info {
+    padding: 15px;
+  }
+</style>
+
+
+<main class="main light-background">
+
+  <!-- Hero Section -->
+  
+  <section id="hero" class="hero section dark-background">
+
+    <div id="hero-carousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="5000">
+
+      <div class="carousel-item active">
+        <img src="static/images/workshop.jpg" alt="">
+        <div class="carousel-container">
+          <h2>ECO SUN POWER LIMITED</h2>
+          
+          <p class="fs-5">"Join the renewable energy revolution with our advanced solar power solutions, tailored to meet your energy needs and sustainability goals. We believe in creating a cleaner and healthier planet by providing eco-friendly alternatives to traditional energy sources. Our systems are designed to deliver consistent performance, helping you reduce your carbon footprint while enjoying significant energy savings. Let us partner with you to create a future powered by the sun, where innovation meets sustainability."</p>
+          <a href="{{url_for('contact_us')}}" class="btn-get-started" style="font-size: large; font-weight: bold;"><strong>Contact Us</strong></a>
+        </div>
+      </div><!-- End Carousel Item -->
+
+      <div class="carousel-item">
+        <img src="static/images/nightlightening.jpg" alt="">
+        <div class="carousel-container">
+          <h2>ECO SUN POWER LIMITED</h2>
+          <p class="fs-5">"Powering a brighter future, we are dedicated to delivering cutting-edge solar energy solutions tailored to meet your unique needs. Our commitment to eco-friendly energy generation ensures a cleaner, greener planet for generations to come, helping you reduce your carbon footprint while enjoying reliable and cost-effective power. Whether you're looking to lower energy costs, enhance sustainability, or embrace renewable energy, we are your trusted partner in creating a world powered by the sun."</p>
+          <a href="{{url_for('contact_us')}}" class="btn-get-started" style="font-size: large; font-weight: bold;"><strong>Contact Us</strong></a>
+          
+        </div>
+      </div><!-- End Carousel Item -->
+
+      <div class="carousel-item">
+        <img src="static/images/workshop4.jpg" alt="">
+        <div class="carousel-container">
+          <h2>ECO SUN POWER LIMITED</h2>
+          <p class="fs-5">"Experience the future of energy with our innovative solar power solutions, designed to revolutionize the way you generate and consume electricity. At the heart of our mission is a commitment to delivering eco-friendly and sustainable energy systems that protect the environment while lowering your energy costs. By harnessing the unlimited power of the sun, we empower homes, businesses, and communities with reliable, clean, and renewable energy solutions. Together, let’s pave the way for a greener planet and a brighter tomorrow."</p>
+          <a href="{{url_for('contact_us')}}" class="btn-get-started" style="font-size: large; font-weight: bold;"><strong>Contact Us</strong></a>
+        </div>
+      </div><!-- End Carousel Item -->
+
+      <a class="carousel-control-prev" href="#hero-carousel" role="button" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon bi bi-chevron-left" aria-hidden="true"></span>
+      </a>
+
+      <a class="carousel-control-next" href="#hero-carousel" role="button" data-bs-slide="next">
+        <span class="carousel-control-next-icon bi bi-chevron-right" aria-hidden="true"></span>
+      </a>
+
+      <ol class="carousel-indicators"></ol>
+
+    </div>
+
+  </section><!-- /Hero Section -->
+
+  <!-- About Section -->
+  <section id="about" class="about section">
+
+    <!-- Section Title -->
+    <div class="container section-title" data-aos="fade-up">
+      <h2>About Us</h2>
+      <div><span>Who We Are</span> <span class="description-title"></span></div>
+    </div><!-- End Section Title -->
+
+    <div class="container">
+
+      <div class="row gy-4">
+
+        <div class="col-lg-6 content" data-aos="fade-up" data-aos-delay="100">
+          <p class="fs-5" style="text-align: justify;">ECOSUN Solar Power Limited is a premier provider of solar energy solutions, dedicated to delivering sustainable and reliable clean energy through our cutting-edge products. As an energy provider company, the Ecosun in partnership with foreign companies in Europe and Asian, we have been at the forefront of solar technology innovation since the company was founded. Our commitment to excellence has positioned us as leaders in the industry, particularly in the development of high-efficiency solar panels, advanced inverters, state-of-the-art lithium batteries and AI and IoT integrated solar streetlights.</p>
+
+          <p class="fs-5" style="text-align: justify;">As our technology and partnerships have evolved, so has our experience, 
+            which reflect our unwavering commitment to quality and innovation. In recent years, we are expanding our focus on overseas cooperation, particularly in government projects, where our expertise in solar energy is making a substantial impact. Today, our systems are deployed in numerous countries, contributing to the global transition 
+            to clean, sustainable energy.</p> 
+
+           
+              
+          
+        </div>
+
+        <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
+          <p class="fs-5" style="text-align: justify;">In recent years, we have aggressively expanded our overseas partnerships, 
+            particularly with government projects. Currently, our solar street lights are in use in about eight countries, including Peru, South Africa, Ghana, Ethiopia, Zimbabwe, Pakistan, Vietnam, and the Philippines, with ongoing development to support multiple 
+            languages. Within Nigeria, our systems have been deployed in over six states, including FCT-Abuja, Delta, Lagos, and Rivers, among others, for both individual and corporate clients.. </p>
+          <p class="fs-5" style="text-align: justify;">Our solar solutions are divided into two main categories. The first includes our top quality solar panels, inverters, and lithium batteries, which are designed to deliver 
+            maximum efficiency and durability. Our panels are known for their high module efficiency, reaching up to 21.33%, and are engineered to perform exceptionally even under low weather conditions. Paired with our pure sine wave solar inverters, which feature advanced technologies like WiFi and GPRS compatibility, </p>
+
+
+          <a href="/about/" class="read-more"><span>Read More</span><i class="bi bi-arrow-right"></i></a>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section><!-- /About Section -->
+
+  
+ 
+  
+
+  <!-- Services Section -->
+  <section id="services" class="services section">
+
+    <!-- Section Title -->
+    <div class="container section-title" data-aos="fade-up">
+      <h2>OUR SERVICES</h2>
+      <div><span>ECOSUN SOLAR POWER SERVICES</span> <span class="description-title"></span></div>
+    </div><!-- End Section Title -->
+
+    <div class="container">
+
+      <div class="row gy-4">
+
+        <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+          <div class="service-item  position-relative">
+            <div class="icon">
+              <i class="fas fa-solar-panel"></i>
+
+            </div>
+            <a href="/service/" class="stretched-link">
+              <h3>Home Solar Power Installation</h3>
+            </a>
+            <p class="fs-5" >At ECOSUN Solar Power, we specialize in delivering customized, reliable, and eco-friendly solar solutions for your home. Our expert team designs systems tailored to your location and energy needs, ensuring maximum efficiency and long-term savings. </p>
+          </div>
+        </div><!-- End Service Item -->
+
+        <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+          <div class="service-item position-relative">
+            <div class="icon">
+              <i class="fas fa-satellite-dish"></i>
+
+            </div>
+            <a href="{{url_for('service')}}" class="stretched-link">
+              <h3>IoT Installation</h3>
+            </a>
+            <p class="fs-5">Our Solar Home Systems integrate seamlessly with IoT technology, offering smart monitoring and control for enhanced efficiency and reliability. With advanced lithium-ion battery storage, they deliver uninterrupted power—critical for healthcare and other essential services. </p>
+          </div>
+        </div><!-- End Service Item -->
+
+        <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+          <div class="service-item position-relative">
+            <div class="icon">
+              <i class="fas fa-bolt"></i>
+            </div>
+            <a href="{{url_for('service')}}" class="stretched-link">
+              <h3>Renewable Energy Installation</h3>
+            </a>
+            <p class="fs-5">Our Solar Home Systems feature high-efficiency lithium-ion batteries for uninterrupted power, ideal for critical operations like healthcare. With scalable design and top-tier solar modules delivering up to 21.33% efficiency, you get long-term reliability, maximum energy output, and excellent return on investment.</p>
+          </div>
+        </div><!-- End Service Item -->
+
+        <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+          <div class="service-item position-relative">
+            <div class="icon">
+              <i class="fas fa-video"></i>
+            </div>
+            <a href="{{url_for('service')}}" class="stretched-link">
+              <h3>SOLAR POWERED CCTV STREET LIGHTENING</h3>
+            </a>
+            <p class="fs-5">Our solar-powered CCTV street lighting system combines high-efficiency solar modules with advanced lithium-ion storage to ensure continuous lighting and surveillance, even without sunlight. 
+
+
+            </p>
+          </div>
+        </div><!-- End Service Item -->
+
+        
+        <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+          <div class="service-item position-relative">
+            <div class="icon">
+              <i class="fas fa-lightbulb"></i>
+            </div>
+           <a href="{{ url_for('service') }}" >
+              <h3> Street Solar Light Installation</h3>
+            </a>
+            <p class="fs-5">ECOSUN Solar Power delivers durable, energy-efficient street lighting solutions powered by the sun. Our weather-resistant systems provide consistent illumination for estates, roads, and public spaces, with expert installation. </p>
+          </div>
+        </div><!-- End Service Item -->
+        
+        <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+          <div class="service-item position-relative">
+            <div class="icon">
+              <i class="fas fa-video"></i>
+            </div>
+            <a href="{{url_for('service')}}" class="stretched-link">
+              <h3>Consultancy & Training</h3>
+            </a>
+            <p class="fs-5">We offer expert consultancy and hands-on training in solar energy systems, empowering individuals and organizations with the knowledge to design, install, and manage efficient renewable solutions.</p>
+          </div>
+        </div><!-- End Service Item -->
+
+      </div>
+
+    </div>
+
+  </section><!-- /Services Section -->
+  
+  
+
+  <!-- Call To Action Section -->
+  <section id="call-to-action" class="call-to-action section dark-background">
+
+    <img src="static/images/battery6.jpg" alt="">
+
+    <div class="container">
+      <div class="row justify-content-center" data-aos="zoom-in" data-aos-delay="100">
+        <div class="col-xl-10">
+          <div class="text-center">
+            <h3>Power Your Future with Clean, Reliable Solar Energy </h3>
+            <p class="fs-5">Say goodbye to power outages and rising electricity bills. Discover how our cutting-edge solar solutions can transform your home or business into a self-sustaining powerhouse. Let’s bring your energy goals to life—starting today.</p>
+
+            <a class="cta-btn" href="/contact/" style="font-size: large; font-weight: bold;">Contact Us</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section><!-- /Call To Action Section -->
+
+ 
+
+  <!-- Portfolio Section -->
+  <section id="portfolio" class="portfolio section">
+
+    <!-- Section Title -->
+    <div class="container section-title" data-aos="fade-up">
+      <h2>OUR PRODUCTS</h2>
+      <div><span>ECOSUN SOLAR PRODUCTS</span> <span class="description-title"></span></div>
+    </div><!-- End Section Title -->
+
+    <div class="container">
+
+      <div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
+
+        
+
+        <div class="row gy-4 isotope-container" data-aos="fade-up" data-aos-delay="200">
+          {% for product in products %}
+          <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-app">
+            <div class="portfolio-content h-100">
+              <a href="{{ url_for('static', filename='uploads/' + product.images[0].image_name) }}" data-gallery="portfolio-gallery-app" class="glightbox">
+                <img src="{{ url_for('static', filename='uploads/' + product.images[0].image_name) }}" class="img-fluid" alt="Product Image">
+                
+              </a>
+
+              
+              <div class="portfolio-info">
+                <h4><a href="portfolio-details.html" title="More Details">{{ product.product_name }}</a></h4>
+                <p>{{ product.product_description[:50] }}...</p>
+                <a href="{{ url_for('product_details', product_id=product.product_id) }}" class="btn btn-success w-100">View Details</a>
+              </div>
+             
+            </div>
+          </div>
+          {% endfor %}
+          
+          
+          
+
+          
+
+         
+
+          
+
+        </div><!-- End Portfolio Container -->
+
+      </div>
+
+    </div>
+
+  </section><!-- /Portfolio Section -->
+
+  
+
+  
+  
+
+  <!-- Contact Section -->
+  <section id="contact" class="contact section light-background">
+
+    <!-- Section Title -->
+    <div class="container section-title" data-aos="fade-up">
+      <h2>Contact</h2>
+      <div><span>Need Our Service?</div>
+    </div><!-- End Section Title -->
+
+    <section class="bg-light py-5 text-center shadow-sm rounded mb-4" style="background: linear-gradient(to right, #fdfffe, #bcc3ca);">
+      <div class="container">
+          <h1 class="display-5 fw-bold text-success mb-3">
+              <i class="fas fa-map-marker-alt text-warning me-2"></i>Get in Touch
+          </h1>
+          <p class=" text-success fs-5">Have questions or ready to make the switch to solar? We're just a message away.</p>
+          <a href="#contactus" class="btn btn-success mt-3 fs-5">
+              <i class="fas fa-arrow-down"></i> Talk to Expert 
+          </a>
+      </div>
+  </section>
+
+    <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+      <div class="row gy-4">
+        <div class="col-lg-6 bg-light p-5 shadow rounded">
+          <div class="text-dark mb-5">
+            <h4 class="mb-4 fw-bold"><i class="fas fa-city text-success me-2"></i>Lagos Office</h4>
+            <p class="fs-5"><i class="fas fa-map-marker-alt text-danger me-2 fa-lg"></i> Uche Ubochi Close, Beside Total Energy Oil, by Sunny Bus Stop Olojo Drive Alaba Int'l Market, Lagos, Nigeria</p>
+            <p class="fs-5"><i class="fas fa-phone-alt text-primary me-2"></i> +2348038664269</p>
+            <p class="fs-5"><i class="fas fa-envelope text-warning me-2"></i> lagosoffice@ecosunsolarpower.com</p>
+            <p class="fs-5"><i class="fas fa-clock text-info me-2"></i> Mon - Fri: 9:00AM - 5:00PM</p>
+          </div>
+        
+          <div class="text-dark">
+            <h4 class="mb-4 fw-bold"><i class="fas fa-city text-success me-2"></i>Abuja Office</h4>
+            <p class="fs-5"><i class="fas fa-map-marker-alt text-danger me-2 fa-lg"></i> Suite A27 Yemi Plaza Gudu FCT Abuja, Nigeria</p>
+            <p class="fs-5"><i class="fas fa-phone-alt text-primary me-2"></i> +2348034833305</p>
+            <p class="fs-5"><i class="fas fa-envelope text-warning me-2"></i> abujaoffice@ecosunsolarpower.com</p>
+            <p class="fs-5"><i class="fas fa-clock text-info me-2"></i> Mon - Fri: 9:00AM - 5:00PM</p>
+          </div>
+        </div>
+
+        <div class="col-lg-6 " >
+          <form action="{{url_for('send_message')}}" method="POST">
+            {{ form.csrf_token }}
+              <div class="mb-3">
+                {{ form.name(class="form-control") }}
+              </div>
+            
+              <div class="mb-3">
+                {{ form.email(class="form-control") }}
+              </div>
+            
+              <div class="mb-3">
+                {{ form.phone(class="form-control") }}
+              </div>
+            
+              <div class="mb-3">
+                {{ form.subject(class="form-control") }}
+              </div>
+            
+              <div class="mb-3">
+                {{ form.message(class="form-control") }}
+              </div>
+              <div class="col-md-12 text-center ">
+                {{ form.submit(class="form-control btn btn-success text-white") }}
+              </div>
+            </form>
+        </div><!-- End Contact Form -->
+
+      </div>
+
+    </div>
+
+  </section><!-- /Contact Section -->
+
+</main>
+ 
+  
+{% endblock content %}

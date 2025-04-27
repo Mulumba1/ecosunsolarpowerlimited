@@ -1,0 +1,61 @@
+{% extends "admin/base.html" %}
+{% block content %}
+
+
+<section class="section">
+  <div class="container mt-5">
+    <h3 class="text-center mb-4">Admin Settings</h3>
+    <div class="row gy-4 justify-content-center">
+      <div class="col-lg-8">
+
+        <form method="POST" enctype="multipart/form-data" class="p-4 shadow rounded bg-white" data-aos-delay="500">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+          <div class="mb-3">
+            <label class="form-label fw-bold">Admin Name</label>
+            <input type="text" name="admin_name" class="form-control" value="{{ current_admin.admin_name }}" required>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label fw-bold">Email</label>
+            <input type="email" name="admin_email" class="form-control" value="{{ current_admin.admin_email }}" required>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label fw-bold">New Password <span class="text-muted">(optional)</span></label>
+            <input type="password" name="new_password" class="form-control" placeholder="Leave blank to keep existing password">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label fw-bold">Profile Picture</label>
+            <input type="file" name="profile_pic" class="form-control" accept="image/*">
+            <small class="text-muted">Max size: 2MB</small>
+
+            {% if current_admin.admin_profile_pic %}
+              <div class="mt-3">
+                <label class="form-label">Current Profile Picture:</label><br>
+                <img src="{{ url_for('static', filename='images/' + current_admin.admin_profile_pic) }}"
+                     alt="Profile" class="img-thumbnail" style="max-height: 120px;">
+              </div>
+            {% endif %}
+          </div>
+
+          <!-- Buttons -->
+          <div class="d-flex justify-content-between mt-4">
+            <button type="submit" class="btn btn-success w-50 me-2">
+              <i class="fas fa-save me-1"></i> Save Changes
+            </button>
+            <a href="{{ url_for('admin_dashboard') }}" class="btn btn-outline-danger w-50">
+              Cancel
+            </a>
+          </div>
+
+        </form>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock content %}
+

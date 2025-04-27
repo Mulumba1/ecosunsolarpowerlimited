@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Home - Ecosun Solar Power Limited </title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+
+
+  <!-- Favicons -->
+  <link href="/static/img/favicon.png" rel="icon">
+ 
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+  <link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/static/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="/static/vendor/aos/aos.css" rel="stylesheet">
+  <link href="/static/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link href="/static/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="{{ url_for('static', filename='font_awesome/css/all.css') }}" rel="stylesheet">
+  <link href="/static/css/main.css" rel="stylesheet">
+
+ 
+</head>
+
+<body class="index-page">
+
+  <header id="header" class="header d-flex align-items-center sticky-top">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center">
+      
+
+      <a href="/" class="logo d-flex align-items-center me-auto">
+        <img src="/static/images/logo.jpg" alt="logo" class="rounded-circle"/> 
+        <h1 class="text-white">ECOSUN POWER LIMITED</h1>
+      </a>
+
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="{{url_for('home')}}" style="font-size: large; font-weight: bold;">Home</a></li>
+          <li><a href="{{url_for('about')}}" style="font-size: large; font-weight: bold;">About</a></li>
+          <li><a href="{{url_for('service')}}" style="font-size: large; font-weight: bold;">Our Services</a></li>
+          <li><a href="{{url_for('products')}}" style="font-size: large; font-weight: bold;">Our Products</a></li>
+          <li> <a class="btn-getstarted" href="{{url_for('contact_us')}}" style="font-size: large; font-weight: bold;">Contact Us</a></li>
+          
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+
+     
+
+    </div>
+  </header>
+
+  {% block content %}
+  {% endblock content %}
+  {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% set category, message = messages[0] %}
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        Swal.fire({
+          icon: '{{ 'success' if category == 'success' else 'info' }}',
+          title: {{ message|tojson }},
+          showConfirmButton: false,
+          timer: 3000
+        });
+      });
+    </script>
+  {% endif %}
+{% endwith %}
+  
+
+  <footer id="footer" class="footer dark-background">
+
+    <div class="container footer-top">
+      <div class="row gy-4">
+        <div class="col-lg-4 col-md-6 footer-about">
+          <a href="index.html" class="logo d-flex align-items-center">
+            <span class="sitename">ECOSUN SOLAR POWER LIMITED</span>
+          </a>
+          <div class="footer-contact pt-3">
+            <p class="fs-5">SUIT A27 YEMI PLAZA </p>
+
+            
+           
+            
+            <p>GUDU FCT ABUJA</p>
+            <p ><strong>Phone:</strong> <span>+2348034833305</span></p>
+            <p ><strong>Phone:</strong> <span>+2348038664269</span></p>
+            <p ><strong>Phone:</strong> <span>+8618719365531</span></p>
+            <p><strong>Email:</strong> <span>support@ecosunsolarpower.com</span></p>
+          </div>
+          
+        </div>
+
+        <div class="col-lg-2 col-md-3 footer-links">
+          <h4>Useful Links</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/about/">About us</a></li>
+            <li><a href="/service/">Services</a></li>
+            <li><a href="/products/">Our Products</a></li>
+            <li><a href="#">Blogs</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-2 col-md-3 footer-links">
+          <h4>Our Services</h4>
+          <ul>
+            <li><a href="/service/">Home Solar Power Installation</a></li>
+            <li><a href="#">Street Light Installation</a></li>
+            <li><a href="#">Renewable Energy Installation</a></li>
+            <li><a href="#">Internent of Things Installation</a></li>
+            <li><a href="#">Consultancy & Training</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-4 col-md-12 footer-newsletter">
+          <h4>Our Newsletter</h4>
+          <p>Subscribe to our newsletter and receive the latest news about our products and services!</p>
+          <form action="forms/newsletter.php" method="post" class="php-email-form">
+            <div class="newsletter-form"><input type="email" name="email"><input type="submit" value="Subscribe"></div>
+            
+          </form>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="container copyright text-center mt-4">
+      <p>© <span>Copyright</span> <strong class="px-1 sitename">ECOSUN SOLAR POWER LIMITED</strong> <span>All Rights Reserved</span></p>
+      <div class="credits">
+        
+        Designed by <a href="#">Catmol Global Technologies</a>
+      </div>
+    </div>
+
+  </footer>
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  
+  <!-- Vendor JS Files -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/static/vendor/php-email-form/validate.js"></script>
+  <script src="/static/vendor/aos/aos.js"></script>
+  <script src="/static/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="/static/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="/static/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="/static/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+  <script src="/static/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="/static/js/main.js"></script>
+
+
+  <script type="text/JavaScript">
+    document.getElementById("year").innerHTML = new Date().getFullYear();
+   
+   </script>
+
+</body>
+
+</html>

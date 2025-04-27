@@ -1,0 +1,144 @@
+{% extends "admin/base.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+    <h2 class="text-center">Add Product</h2>
+    <div class="row gy-4 w-100 justify-content-center">
+    <div class="col-lg-10">
+
+    <form id="product-form" action="{{ url_for('add_product') }}" method="POST" class="email-form p-4 shadow rounded bg-white"  data-aos-delay="500" enctype="multipart/form-data">
+        {{ form.hidden_tag() }} 
+
+        <div class="mb-3">
+            <label class="col-sm-3 col-form-label fw-bold">{{ form.name.label.text }}</label>
+            {{ form.name(class="form-control", required=True) }}
+           
+
+        </div>
+
+        <div class="mb-3">
+            <label class="col-sm-3 col-form-label fw-bold">{{ form.description.label.text }}</label>
+            {{ form.description(class="form-control", rows=4, required=True) }}
+        </div>
+
+        
+
+        <div class="mb-3">
+            <label class="col-sm-3 col-form-label fw-bold">{{ form.category.label.text }}</label>
+            {{ form.category(class="form-select") }}
+            {% for error in form.category.errors %}
+                <div class="text-danger">{{ error }}</div>
+            {% endfor %}
+            
+            
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label fw-bold">Upload Images</label>
+            <input type="file" class="form-control" name="images" id="image-upload" multiple accept="image/*">
+            <small class="text-muted">You can upload up to 5 images.</small>
+
+            <!-- Display selected file names -->
+            <div id="selected-images" class="mt-2"></div>
+
+            <!-- Preview uploaded images -->
+            <div id="imagePreview" class="mt-2 d-flex"></div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Add Product</button>
+        <a href="{{ url_for('manage_products') }}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+</div>
+</div>
+
+<!-- JavaScript for Image Handling -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+let previewedFiles = [];  // Array to store successfully previewed files
+
+document.getElementById('image-upload').addEventListener('change', function (event) {
+    let imagePreview = document.getElementById('imagePreview');
+    let selectedImages = document.getElementById('selected-images');
+
+    // Clear previous selections
+    imagePreview.innerHTML = "";
+    selectedImages.innerHTML = "";
+
+    let files = Array.from(event.target.files);
+
+    if (files.length > 5) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Too Many Files',
+            text: 'You can upload a maximum of 5 images.'
+        });
+        return;
+    }
+
+    files.forEach((file) => {
+        if (!file.type.startsWith("image/")) return;
+
+        let reader = new FileReader();
+        reader.onload = function (e) {
+            let img = document.createElement('img');
+            img.src = e.target.result;
+            img.classList.add('img-thumbnail', 'm-1');
+            img.style.width = "100px";
+            img.style.cursor = "pointer";
+
+            imagePreview.appendChild(img);
+        };
+
+        reader.readAsDataURL(file);
+
+        // Display file names in a single line
+        let fileName = document.createElement('span');
+        fileName.textContent = file.name + " | ";
+        selectedImages.appendChild(fileName);
+    });
+});
+
+document.getElementById('product-form').addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    let formData = new FormData(this);
+
+    fetch(this.action, {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: 'Product added successfully!',
+                timer: 2000,
+                showConfirmButton: false
+            }).then(() => {
+                window.location.href = "{{ url_for('manage_products') }}";
+            });
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: data.message || 'Failed to add product.'
+            });
+        }
+    })
+    .catch(error => {
+        console.error("Error:", error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'An error occurred. Please try again.'
+        });
+    });
+});
+</script>
+
+
+{% endblock %}

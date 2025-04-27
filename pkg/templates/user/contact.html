@@ -1,0 +1,129 @@
+
+{% extends "user/base.html" %}
+
+{% block content %}
+
+
+
+  <style>
+    
+    .contact-section {
+      background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('/static/images/workshop2.jpg') center/cover no-repeat;
+      color: white;
+      padding: 80px 0;
+    }
+    .contact-form {
+      background: white;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 0 30px rgba(0,0,0,0.1);
+    }
+    .contact-info i {
+      color: #ffc107;
+      font-size: 1.5rem;
+      margin-right: 10px;
+    }
+    .form-control, .form-control:focus {
+      border-radius: 0.5rem;
+      box-shadow: none;
+    }
+    .btn-custom {
+      background-color: #198754;
+      border: none;
+      color: #000;
+      border-radius: 0.5rem;
+      transition: 0.3s ease;
+    }
+    .btn-custom:hover {
+      background-color: #e0a800;
+      color: white;
+    }
+  </style>
+
+
+
+<!-- Contact Section -->
+<section class="contact-section">
+  <div class="container">
+    <section class="bg-light py-5 text-center shadow-sm rounded mb-4" style="background: linear-gradient(to right, #fdfffe, #bcc3ca);">
+        <div class="container">
+            <h1 class="display-5 fw-bold text-success mb-3">
+                <i class="fas fa-map-marker-alt text-warning me-2"></i>Get in Touch
+            </h1>
+            <p class=" text-success fs-5">Have questions or ready to make the switch to solar? We're just a message away.</p>
+            <a href="#contactus" class="btn btn-success mt-3 fs-5">
+                <i class="fas fa-arrow-down"></i> Talk to Expert 
+            </a>
+        </div>
+    </section>
+
+    <div class="row g-5">
+      
+      <div class="col-lg-6 bg-light p-5 shadow rounded">
+        <div class="text-dark mb-5">
+          <h4 class="mb-4 fw-bold"><i class="fas fa-city text-success me-2"></i>Lagos Office</h4>
+          <p class="fs-5"><i class="fas fa-map-marker-alt text-danger me-2 fa-lg"></i> Uche Ubochi Close, Beside Total Energy Oil, by Sunny Bus Stop Olojo Drive Alaba Int'l Market, Lagos, Nigeria</p>
+          <p class="fs-5"><i class="fas fa-phone-alt text-primary me-2"></i> +2348038664269</p>
+          <p class="fs-5"><i class="fas fa-envelope text-warning me-2"></i> lagosoffice@ecosunsolarpower.com</p>
+          <p class="fs-5"><i class="fas fa-clock text-info me-2"></i> Mon - Fri: 9:00AM - 5:00PM</p>
+        </div>
+      
+        <div class="text-dark">
+          <h4 class="mb-4 fw-bold"><i class="fas fa-city text-success me-2"></i>Abuja Office</h4>
+          <p class="fs-5"><i class="fas fa-map-marker-alt text-danger me-2 fa-lg"></i> Suite A27 Yemi Plaza Gudu FCT Abuja, Nigeria</p>
+          <p class="fs-5"><i class="fas fa-phone-alt text-primary me-2"></i> +2348034833305</p>
+          <p class="fs-5"><i class="fas fa-envelope text-warning me-2"></i> abujaoffice@ecosunsolarpower.com</p>
+          <p class="fs-5"><i class="fas fa-clock text-info me-2"></i> Mon - Fri: 9:00AM - 5:00PM</p>
+        </div>
+      </div>
+      
+      <div class="col-lg-6" id="contactus">
+        <div class="contact-form">
+            <form action="{{url_for('send_message')}}" method="POST">
+              {{ form.csrf_token }}
+                <div class="mb-3">
+                  {{ form.name(class="form-control") }}
+                </div>
+              
+                <div class="mb-3">
+                  {{ form.email(class="form-control") }}
+                </div>
+              
+                <div class="mb-3">
+                  {{ form.phone(class="form-control") }}
+                </div>
+              
+                <div class="mb-3">
+                  {{ form.subject(class="form-control") }}
+                </div>
+              
+                <div class="mb-3">
+                  {{ form.message(class="form-control") }}
+                </div>
+                <div class="col-md-12 text-center ">
+                  {{ form.submit(class="form-control btn btn-success text-white") }}
+                </div>
+              </form>
+              
+        </div>
+      </div>
+    </div>
+
+    <!-- Optional Google Map -->
+    <div class="row mt-5">
+      <div class="col-6">
+        <div class="ratio ratio-16x9 rounded-3 overflow-hidden shadow-lg">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126864.13698261537!2d3.063593806376432!3d6.457608122622966!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x103b879e628e0c39%3A0x6640ca7ac53557b9!2sOlojo%20drive%2C%20Alaba%20international%20market%20Lagos!5e0!3m2!1sen!2sng!4v1745224445319!5m2!1sen!2sng" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="ratio ratio-16x9 rounded-3 overflow-hidden shadow-lg">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3940.6814269341266!2d7.469918574066552!3d9.001432789421811!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x104e0cf302af8941%3A0x91b0766f4fbde2de!2sAnon%20Plaza!5e0!3m2!1sen!2sng!4v1745223445625!5m2!1sen!2sng" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+{% endblock content %}
