@@ -2,6 +2,7 @@ import os, random, uuid, string
 from uuid import uuid4
 from flask import render_template,request,redirect,flash,url_for,session,g,flash,jsonify,send_file,current_app
 from flask_mailman import EmailMessage
+from functools import wraps
 from sqlalchemy import or_
 from itsdangerous import URLSafeTimedSerializer
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -13,6 +14,16 @@ from pkg.product_forms import ProductForm
 from pkg.register_forms import RegisterForm
 
 
+def admin_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'admin_id' not in session:
+            flash("Please log in first!", "warning")
+            return redirect(url_for('admin_login'))
+        return f(*args, **kwargs)
+    return decorated_function
+
+
 ALLOWED_EXTENSIONS = {'.jpg', '.jpeg', '.png'}
 
 def allowed_file(filename):
@@ -21,60 +32,6 @@ def allowed_file(filename):
     return ext in ALLOWED_EXTENSIONS
 
 
-
-# def generate_ref(year=None,month=None, serial_number=None):
-#     if year is None:
-#         year = datetime.now().year
-#     if month is None:
-#         month = datetime.now().month   
-#     if serial_number is None:
-#         serial_number = random.randint(1, 9999)  
-
-#     year_str = str(year).zfill(4)
-#     month_str = str(month).zfill(2)
-#     serial_str = str(serial_number).zfill(4)
-#     letters = ''.join(random.choices(string.ascii_uppercase, k=2))
-#     product_ref = year_str + month_str + serial_str + letters
-#     return product_ref
-
-
-
-# @app.route('/add/product/', methods=['GET', 'POST'])
-# def add_product():
-#     form = ProductForm()
-
-#     if request.method == 'POST' and form.validate_on_submit():
-#         year = datetime.now().year
-#         month = datetime.now().month
-#         serial_number = Product.query.count() + 1  
-#         product_ref = generate_ref(year, month, serial_number)
-#         product_name = form.name.data
-#         product_description = form.description.data
-#         images = request.files.getlist("images")
-
-#         if not images or images[0].filename == '':
-#             return jsonify({"success": False, "message": "Please select at least one file"}), 400
-
-#         try:
-#             new_product = Product(product_name=product_name, product_description=product_description, product_ref=product_ref)
-#             db.session.add(new_product)
-#             db.session.commit()
-#             for pic in images:
-#                 if not allowed_file(pic.filename):
-#                     return jsonify({"success": False, "message": f"File extension not allowed: {pic.filename}"}), 400
-#                 file_extension = pic.filename.rsplit('.', 1)[1].lower()
-#                 unique_filename = f"{uuid4()}.{file_extension}"
-#                 file_path = os.path.join(app.config["UPLOAD_FOLDER"], unique_filename)
-
-#                 pic.save(file_path) 
-#                 new_image = ProductImage(image_name=unique_filename, product_id=new_product.product_id)
-#                 db.session.add(new_image)
-#             db.session.commit()
-#             return jsonify({"success": True, "message": "Product added successfully!"})
-#         except Exception as e:
-#             db.session.rollback()
-#             return jsonify({"success": False, "message": f"Error: {str(e)}"}), 500
-#     return render_template("admin/add_product.html", form=form)
 
 
 
@@ -93,6 +50,7 @@ def generate_ref(year=None, month=None, serial_number=None):
 
 
 @app.route('/add/product/', methods=['GET', 'POST'])
+@admin_required
 def add_product():
     unread_messages = ContactUs.query.filter_by(status="unread").count()
     form = ProductForm()
@@ -100,7 +58,6 @@ def add_product():
     form.category.choices = [(0, 'Select Category')] + [(c.id, c.name) for c in Category.query.all()]
 
     if form.validate_on_submit():
-        # ✅ Check if category was not selected
         if form.category.data == 0:
             return jsonify({"success": False, "message": "Please select a valid category."}), 400
 
@@ -148,6 +105,7 @@ def add_product():
 
 
 @app.route('/manage/products/')
+@admin_required
 def manage_products():
     unread_messages = ContactUs.query.filter_by(status="unread").count()
     page = request.args.get('page', 1, type=int)
@@ -177,15 +135,9 @@ def manage_products():
 
 
 
-# @app.route('/products')
-# def product_list():
-#     products = Product.query.all()
-#     return render_template('product_list.html', products=products, current_admin=g.admin)
-
-
-
 
 @app.route('/admin/products/edit/<int:product_id>/', methods=['GET', 'POST'])
+@admin_required
 def edit_product(product_id):
     unread_messages = ContactUs.query.filter_by(status="unread").count()
     product = Product.query.get_or_404(product_id)
@@ -211,6 +163,7 @@ def edit_product(product_id):
 
 
 @app.route('/admin/product/<int:product_id>')
+@admin_required
 def admin_product_details(product_id):
     product = Product.query.get_or_404(product_id)
     return render_template('admin/products_details.html', product=product)
@@ -218,6 +171,7 @@ def admin_product_details(product_id):
 
 
 @app.route('/admin/products/delete/<int:product_id>/', methods=['POST'])
+@admin_required
 def delete_product(product_id):
     product = Product.query.get_or_404(product_id)
     db.session.delete(product)
@@ -230,13 +184,15 @@ def delete_product(product_id):
 
 
 @app.route('/admin/dashboard/')
+@admin_required
 def admin_dashboard():
     total_products = Product.query.count()
-    total_budistritors= Distributor.query.count()
+    total_distributors= Distributor.query.count()
+    total_gallery = Gallery.query.count()
     unread_messages = ContactUs.query.filter_by(status="unread").count()
     products = Product.query.order_by(Product.created_at.desc()).limit(10).all()
     return render_template('admin/dashboard.html', products=products, total_products=total_products,unread_messages=unread_messages,
-    current_admin=g.admin, total_distributors=total_budistritors)
+    current_admin=g.admin, total_distributors=total_distributors,total_gallery=total_gallery)
 
 
 
@@ -266,7 +222,7 @@ def register_admin():
         db.session.add(new_admin)
         db.session.commit()
         flash("Admin registered successfully!", "success")
-        return redirect(url_for('admin_login'))  # Change this to your login route
+        return redirect(url_for('admin_login'))  
 
     return render_template("admin/register.html", form=form,
     unread_messages=unread_messages,
@@ -318,25 +274,46 @@ def verify_reset_token(token, max_age=3600):
     return email
 
 
+
+
 @app.route('/admin/forgot_password/', methods=['GET', 'POST'])
 def forgot_password():
     unread_messages = ContactUs.query.filter_by(status="unread").count()
+    
     if request.method == 'POST':
         email = request.form.get('email')
         admin = Admin.query.filter_by(admin_email=email).first()
+        
         if admin:
             token = generate_reset_token(admin.admin_email)
             reset_url = url_for('reset_password', token=token, _external=True)
 
-            # TODO: Send email here with reset_url
-            print("Password reset link:", reset_url)
+            
+            email_msg = EmailMessage(
+                subject="Password Reset Request",
+                from_email="support@ecosunsolarpower.com",
+                to=[admin.admin_email],
+                body=f'''Hello {admin.admin_name},
 
-            flash('A password reset link has been sent to your email.', 'info')
+To reset your password, click the link below:
+{reset_url}
+
+If you did not request this, please ignore this email.
+'''
+            )
+            try:
+                email_msg.send()  
+                flash('A password reset link has been sent to your email.', 'info')
+            except Exception as e:
+                flash('Failed to send reset email. Please try again later.', 'danger')
+            
             return redirect(url_for('admin_login'))
         else:
             flash('Email not found.', 'danger')
-    return render_template('admin/forgot_password.html',
-    unread_messages=unread_messages)
+
+    return render_template('admin/forgot_password.html', unread_messages=unread_messages)
+
+
 
 
 @app.route('/admin/reset_password/<token>/', methods=['GET', 'POST'])
@@ -365,6 +342,7 @@ def reset_password(token):
 
 
 @app.route('/admin/messages/')
+@admin_required
 def manage_messages():
     """Display all contact messages in the admin panel with pagination."""
     page = request.args.get('page', 1, type=int)  
@@ -388,6 +366,7 @@ def manage_messages():
 
 
 @app.route('/admin/messages/delete/<int:message_id>/')
+@admin_required
 def delete_message(message_id):
     """Delete a contact message using a GET request."""
     message = ContactUs.query.get_or_404(message_id)
@@ -403,6 +382,7 @@ def delete_message(message_id):
 
 
 @app.route('/admin/messages/reply/', methods=['POST'])
+@admin_required
 def reply_message():
     """Send a reply via email."""
     email = request.form.get('email')
@@ -431,6 +411,7 @@ def reply_message():
 
 
 @app.route('/admin/send-mail/', methods=['GET', 'POST'])
+@admin_required
 def send_mail():
     """Allow admin to send emails to users."""
     if request.method == 'POST':
@@ -455,6 +436,7 @@ def send_mail():
 
 
 @app.route("/admin/settings/", methods=["GET", "POST"])
+@admin_required
 def admin_settings():
     unread_messages = ContactUs.query.filter_by(status="unread").count()
     if not g.admin:
@@ -488,6 +470,7 @@ def admin_settings():
 
 
 @app.route('/admin/upload_gallery/', methods=['GET', 'POST'])
+@admin_required
 def upload_gallery():
     unread_messages = ContactUs.query.filter_by(status="unread").count()
     
@@ -537,8 +520,9 @@ def upload_gallery():
 
 
 @app.route('/admin/galleries')
+@admin_required
 def manage_galleries():
-    total_galleries= Gallery.query.count()
+    total_gallery= Gallery.query.count()
     unread_messages = ContactUs.query.filter_by(status="unread").count()
     page = request.args.get('page', 1, type=int)
     search_query = request.args.get('search', '', type=str)
@@ -553,11 +537,12 @@ def manage_galleries():
         html = render_template('admin/galleries_table.html', galleries=galleries, gallery_items=galleries.items)
         return jsonify({'html': html})
     
-    return render_template('admin/manage_galleries.html', galleries=galleries, gallery_items=galleries.items, search_query=search_query, unread_messages=unread_messages, current_admin=g.admin, total_galleries=total_galleries)
+    return render_template('admin/manage_galleries.html', galleries=galleries, gallery_items=galleries.items, search_query=search_query, unread_messages=unread_messages, current_admin=g.admin, total_gallery=total_gallery)
 
 
 
 @app.route('/admin/gallery/edit/<int:id>/', methods=['GET', 'POST'])
+@admin_required
 def edit_gallery(id):
     gallery = Gallery.query.get_or_404(id)
     unread_messages = ContactUs.query.filter_by(status="unread").count()
@@ -578,6 +563,7 @@ def edit_gallery(id):
 
 
 @app.route('/admin/gallery/delete/<int:id>/', methods=['POST'])
+@admin_required
 def delete_gallery(id):
     gallery = Gallery.query.get_or_404(id)
     db.session.delete(gallery)
@@ -587,6 +573,7 @@ def delete_gallery(id):
 
 
 @app.route('/manage_distributors/')
+@admin_required
 def manage_distributors():
     page = request.args.get('page', 1, type=int)
     search_query = request.args.get('search', '').strip()
@@ -622,6 +609,7 @@ def manage_distributors():
 
 
 @app.route('/admin/distributor/<int:id>')
+@admin_required
 def distributor_details(id):
     distributor = Distributor.query.get_or_404(id)
     unread_messages = ContactUs.query.filter_by(status="unread").count()

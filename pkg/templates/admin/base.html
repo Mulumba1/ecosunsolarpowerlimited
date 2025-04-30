@@ -66,7 +66,7 @@
       <div class="dropdown">
         <a class="dropdown-toggle d-flex align-items-center" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <img 
-                src="{{ url_for('static', filename='images/' + (session.get('admin_profile_pic') or 'sunday2.png')) }}" 
+                src="{{ url_for('static', filename='images/' + (g.admin.admin_profile_pic or 'sunday2.png')) }}" 
                 alt="Admin Profile" 
                 class="rounded-circle border" 
                 style="height: 60px; width: 60px; object-fit: cover;">

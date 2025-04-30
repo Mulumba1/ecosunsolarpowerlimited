@@ -5,13 +5,19 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <title>Home - Ecosun Solar Power Limited </title>
-  <meta name="description" content="">
-  <meta name="keywords" content="">
+  <meta name="description" content="Ecosun Solar Power Limited delivers premium solar energy solutions including high-efficiency solar panels, smart inverters, lithium batteries, and AI-powered solar streetlights across Nigeria and globally.">
+<meta name="keywords" content="solar energy solutions, solar panels Nigeria, solar street lights, solar inverter, lithium battery, Ecosun Solar Power, renewable energy, solar home systems, off-grid solar, solar CCTV streetlights, energy management, clean energy">
+
+  <meta name="author" content="Mulumba Uchenna Ede, a software developer">
+  <meta property="og:title" content="About Ecosun Solar Power Limited - Solar Energy Experts">
+  <meta property="og:description" content="Discover how Ecosun Solar Power Limited is pioneering sustainable energy with high-efficiency solar products and AI-powered solar street lighting solutions across the globe.">
+  <meta property="og:image" content="https://www.ecosunsolarpower.com/static/images/battery3.jpg">
+  <meta property="og:url" content="https://www.ecosunsolarpower.com/about">
+  <meta name="robots" content="index, follow">
+
   <meta name="csrf-token" content="{{ csrf_token() }}">
-
-
   <!-- Favicons -->
-  <link href="/static/img/favicon.png" rel="icon">
+  <link href="{{ url_for('static', filename='images/favicon.png') }}" rel="icon">
  
 
   <!-- Fonts -->
@@ -36,10 +42,24 @@
     <div class="container-fluid container-xl position-relative d-flex align-items-center">
       
 
-      <a href="/" class="logo d-flex align-items-center me-auto">
-        <img src="/static/images/logo.jpg" alt="logo" class="rounded-circle"/> 
+      <!-- <a href="/" class="logo d-flex align-items-center me-auto">
+        <img src="/static/images/logo2.jpg" alt="logo" class=""/> 
         <h1 class="text-white">ECOSUN POWER LIMITED</h1>
+      </a> -->
+
+      <a href="/" class="logo d-flex align-items-center me-auto">
+        <img src="/static/images/logo2.jpg" alt="Ecosun Power Limited Logo" class="logo-img"/>
+        <span class="logo-text">Ecosun Power Ltd</span>
       </a>
+      
+      <!-- <header id="header" class="header fixed-top d-flex align-items-center justify-content-center">
+        <a href="/" class="logo d-flex align-items-center">
+          <img src="/static/images/logo2.jpg" alt="logo" />
+          <h1 class="logo-text mb-0">ECOSUN POWER LIMITED</h1>
+        </a>
+      </header> -->
+      
+      
 
       <nav id="navmenu" class="navmenu">
         <ul>
@@ -47,7 +67,8 @@
           <li><a href="{{url_for('about')}}" style="font-size: large; font-weight: bold;">About</a></li>
           <li><a href="{{url_for('service')}}" style="font-size: large; font-weight: bold;">Our Services</a></li>
           <li><a href="{{url_for('products')}}" style="font-size: large; font-weight: bold;">Our Products</a></li>
-          <li> <a class="btn-getstarted" href="{{url_for('contact_us')}}" style="font-size: large; font-weight: bold;">Contact Us</a></li>
+          <li><a href="{{url_for('show_gallery')}}" style="font-size: large; font-weight: bold;">Gallery</a></li>
+          <li><a href="{{url_for('contact_us')}}" style="font-size: large; font-weight: bold;">Contact Us</a></li>
           
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>

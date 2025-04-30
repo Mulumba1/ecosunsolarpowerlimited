@@ -41,14 +41,16 @@
 
             <p class="text-info">Category: {{ product.category.name }}</p>
             
-            <!-- <button class="btn btn-primary w-100 mt-3" onclick="contactAdmin()">Contact Supplier</button> -->
+            
 
            
         <div class="d-flex gap-4">
-            
-            <a href="https://wa.me/+8618719365531" target="_blank" class="btn btn-success">
+            <a href="javascript:void(0);" onclick="contactAdmin()" class="btn btn-success">
                 <i class="fab fa-whatsapp fa-2x"></i>&nbsp; Chat on WhatsApp
             </a>
+            
+            
+            
             <a href="mailto:support@ecosunsolarpower.com" target="_blank" class="btn btn-success">
                 <i class="fas fa-envelope fa-2x"></i>&nbsp; Send a Mail
             </a>
@@ -87,7 +89,7 @@
         const productRef = "{{ product.product_ref }}";
         const message = `Hello,%0AI would like to inquire about the product: *${productName} (Ref: ${productRef})*.%0ACould you provide more details?`;
 
-        window.location.href = `https://wa.me/+2347069741483?text=${message}`;
+        window.location.href = `https://wa.me/+8618719365531?text=${message}`;
     }
 </script>
 {% endblock %}
